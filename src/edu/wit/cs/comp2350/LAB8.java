@@ -2,6 +2,8 @@ package edu.wit.cs.comp2350;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
@@ -16,7 +18,49 @@ public class LAB8 {
 	// TODO: document this method
 	public static Node[] FindTopo(Graph g) {
 		// TODO: implement this method
-		return null;
+		Node[] nodeArray = g.GetNodes();
+
+		LinkedList<Node> list = new LinkedList<>();
+
+		for (Node node : nodeArray) {
+			DFS(g);
+			list.add(node);
+		}
+
+		for (Node node : list) {
+			System.out.print(node.toString() + " ");
+		}
+
+		Node[] arr;
+		arr = list.toArray(new Node[list.size()]);
+
+		return arr;
+	}
+
+	public static void DFS(Graph g) {
+
+		for (Node n: g.GetNodes()) {
+			n.marker = 0;
+		}
+		for (Node n: g.GetNodes()) {
+			if (n.marker == 0) {
+				DFSvisit(g, n);
+			}
+		}
+	}
+	//n = u and t = v;
+	private static void DFSvisit(Graph g, Node n) {
+
+		Node[] arr = g.GetEdges(n);
+
+		n.marker = 1;
+		for (Node t: arr) {
+			if (t.marker == 0) {
+				DFSvisit(g, t);
+			}
+
+		}
+		n.marker = 2;
 	}
 	
 	
