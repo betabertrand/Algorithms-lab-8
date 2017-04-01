@@ -13,7 +13,12 @@ import java.util.Scanner;
  */
 
 // Provides a solution to the topological sorting problem
+
+
+
 public class LAB8 {
+
+	//private static LinkedList<Node> list = new LinkedList<>();
 	
 	// TODO: document this method
 	public static Node[] FindTopo(Graph g) {
@@ -22,45 +27,68 @@ public class LAB8 {
 
 		LinkedList<Node> list = new LinkedList<>();
 
-		for (Node node : nodeArray) {
-			DFS(g);
-			list.add(node);
-		}
+
+
+
+			DFS(g, list);
+
+
+
+
+
 
 		for (Node node : list) {
 			System.out.print(node.toString() + " ");
 		}
 
+
 		Node[] arr;
 		arr = list.toArray(new Node[list.size()]);
+
+		Node node0 = new Node(0, "file0"), node1 = new Node(1, "file1"), node2 = new Node(2, "file2"), node3 = new Node(3, "file3");
+
+		Node[] arr2 = new Node[] {node0, node1, node2, node3};
 
 		return arr;
 	}
 
-	public static void DFS(Graph g) {
+	public static void DFS(Graph g, LinkedList<Node> list) {
+
 
 		for (Node n: g.GetNodes()) {
 			n.marker = 0;
 		}
 		for (Node n: g.GetNodes()) {
 			if (n.marker == 0) {
-				DFSvisit(g, n);
+				DFSvisit(g, n, list);
+
 			}
+
 		}
+
+
+
 	}
 	//n = u and t = v;
-	private static void DFSvisit(Graph g, Node n) {
+	private static void DFSvisit(Graph g, Node n, LinkedList<Node> list) {
 
 		Node[] arr = g.GetEdges(n);
 
 		n.marker = 1;
+
 		for (Node t: arr) {
 			if (t.marker == 0) {
-				DFSvisit(g, t);
+				DFSvisit(g, t, list);
+
 			}
 
 		}
 		n.marker = 2;
+		list.addFirst(n);
+
+
+
+
 	}
 	
 	
